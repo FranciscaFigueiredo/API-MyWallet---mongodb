@@ -7,6 +7,12 @@ const userSchema = joi.object({
     confirmPassword: joi.string().min(6),
 });
 
+const loginSchema = joi.object({
+    email: joi.string().email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } }),
+    password: joi.string().min(6),
+});
+
 export {
     userSchema,
+    loginSchema,
 };
