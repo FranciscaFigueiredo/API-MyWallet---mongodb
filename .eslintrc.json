@@ -22,6 +22,9 @@
         "indent": [
             "error",
             4
+        ],
+        "no-underscore-dangle": [
+            "off"
         ]
     }
 }
