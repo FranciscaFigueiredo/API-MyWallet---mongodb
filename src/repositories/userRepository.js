@@ -22,7 +22,20 @@ async function findByEmail({ email }) {
     return searchEmail;
 }
 
+async function login({
+    token,
+    userId,
+}) {
+    const db = await connection({ column: 'sessions' });
+
+    await db.insertOne({
+        token,
+        userId,
+    });
+}
+
 export {
     create,
     findByEmail,
+    login,
 };
