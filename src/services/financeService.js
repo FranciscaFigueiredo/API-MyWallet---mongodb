@@ -1,4 +1,4 @@
-import { connection } from '../database.js';
+import dayjs from 'dayjs';
 
 async function validateType({
     value,
@@ -24,7 +24,12 @@ async function newFinancialEvent({
 }) {
     const dateToday = dayjs().locale('pt-Br').format('DD/MM/YYYY HH:mm:ss');
 
-    return true;
+    return {
+        userId,
+        value,
+        description,
+        date: dateToday,
+    };
 }
 
 export {

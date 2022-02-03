@@ -9,7 +9,6 @@ async function postFinancialEvents(req, res) {
     } = req.body;
 
     const userId = res.locals.user?.idUser;
-    console.log(userId);
 
     const { type } = req.query;
 
