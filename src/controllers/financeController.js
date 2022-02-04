@@ -50,6 +50,19 @@ async function postFinancialEvents(req, res) {
     }
 }
 
+async function getFinancialEvents(req, res) {
+    const userId = res.locals.user;
+
+    try {
+        const financialEvents = await financeService.findFinancialEventsByUserId({ userId });
+
+        return res.send(financialEvents);
+    } catch (error) {
+        return res.status(500).send({ message: 'O banco de dados está offline' });
+    }
+}
+
 export {
     postFinancialEvents,
+    getFinancialEvents,
 };

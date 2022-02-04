@@ -41,7 +41,14 @@ async function newFinancialEvent({
     });
 }
 
+async function findFinancialEventsByUserId({ userId }) {
+    const financialEvents = await financeRepository.find({ userId });
+
+    return financialEvents;
+}
+
 export {
     validateType,
     newFinancialEvent,
+    findFinancialEventsByUserId,
 };
