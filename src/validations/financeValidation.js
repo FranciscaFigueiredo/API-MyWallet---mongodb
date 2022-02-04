@@ -5,4 +5,11 @@ const financeSchema = joi.object({
     description: joi.string().min(3).max(30).required(),
 });
 
-export { financeSchema };
+const typeSchema = joi.object({
+    type: joi.string().pattern(/^exit$|^entry$/),
+});
+
+export {
+    financeSchema,
+    typeSchema,
+};

@@ -1,4 +1,5 @@
 import BodyError from '../errors/BodyError.js';
+import NotFoundError from '../errors/NotFoundError.js';
 import * as financeService from '../services/financeService.js';
 import { financeSchema } from '../validations/financeValidation.js';
 
@@ -8,7 +9,7 @@ async function postFinancialEvents(req, res) {
         description,
     } = req.body;
 
-    const userId = res.locals.user?.idUser;
+    const userId = res.locals.user;
 
     const { type } = req.query;
 
@@ -31,7 +32,7 @@ async function postFinancialEvents(req, res) {
 
         await financeService.newFinancialEvent({
             userId,
-            valueData,
+            value: valueData,
             description,
         });
 
@@ -39,6 +40,10 @@ async function postFinancialEvents(req, res) {
     } catch (error) {
         if (error instanceof BodyError) {
             return res.status(400).send(error.message);
+        }
+
+        if (error instanceof NotFoundError) {
+            return res.status(404).send(error.message);
         }
 
         return res.status(500).send({ message: 'O banco de dados está offline' });

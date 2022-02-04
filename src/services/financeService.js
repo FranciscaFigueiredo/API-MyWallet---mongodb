@@ -1,9 +1,18 @@
 import dayjs from 'dayjs';
+import NotFoundError from '../errors/NotFoundError.js';
+import * as financeRepository from '../repositories/financeRepository.js';
+import { typeSchema } from '../validations/financeValidation.js';
 
 async function validateType({
     value,
     type,
 }) {
+    const validate = typeSchema.validate({ type });
+
+    if (validate.error) {
+        throw new NotFoundError();
+    }
+
     let valueData = value;
 
     if (type === 'exit' && value > 0) {
@@ -24,12 +33,12 @@ async function newFinancialEvent({
 }) {
     const dateToday = dayjs().locale('pt-Br').format('DD/MM/YYYY HH:mm:ss');
 
-    return {
+    await financeRepository.create({
         userId,
         value,
         description,
         date: dateToday,
-    };
+    });
 }
 
 export {
