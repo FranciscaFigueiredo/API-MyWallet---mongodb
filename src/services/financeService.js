@@ -42,9 +42,14 @@ async function newFinancialEvent({
 }
 
 async function findFinancialEventsByUserId({ userId }) {
-    const financialEvents = await financeRepository.find({ userId });
+    const wallet = await financeRepository.find({ userId });
 
-    return financialEvents;
+    const total = wallet.reduce((soma, value) => soma + value.value, 0);
+
+    return {
+        wallet,
+        total,
+    };
 }
 
 export {
