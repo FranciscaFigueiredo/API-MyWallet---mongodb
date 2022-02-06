@@ -58,7 +58,21 @@ async function authenticateUser({
     return token;
 }
 
+async function findUserInfo({ userId }) {
+    const user = await userRepository.findById({ userId });
+
+    return { name: user.name };
+}
+
+async function logoutUser({ userId }) {
+    await userRepository.deleteSession({ userId });
+
+    return true;
+}
+
 export {
     registerUser,
     authenticateUser,
+    findUserInfo,
+    logoutUser,
 };

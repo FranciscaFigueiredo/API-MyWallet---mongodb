@@ -11,7 +11,7 @@ async function auth(req, res, next) {
 
     const userSession = await db.findOne({ token });
 
-    const userId = userSession._id;
+    const userId = userSession?.userId;
 
     res.locals.user = userId;
 

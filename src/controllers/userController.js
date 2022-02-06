@@ -85,7 +85,33 @@ async function login(req, res) {
     }
 }
 
+async function getUserInfo(req, res) {
+    const userId = res.locals.user;
+
+    try {
+        const userInfo = await userService.findUserInfo({ userId });
+
+        return res.status(200).send(userInfo);
+    } catch (error) {
+        return res.status(500).send({ message: 'O banco de dados está offline' });
+    }
+}
+
+async function postLogout(req, res) {
+    const userId = res.locals.user;
+
+    try {
+        await userService.logoutUser({ userId });
+
+        return res.sendStatus(200);
+    } catch (error) {
+        return res.status(500).send({ message: 'O banco de dados está offline' });
+    }
+}
+
 export {
     signUp,
     login,
+    getUserInfo,
+    postLogout,
 };
