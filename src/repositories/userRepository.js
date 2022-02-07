@@ -1,3 +1,4 @@
+import { ObjectId } from 'mongodb';
 import { connection } from '../database.js';
 
 async function create({
@@ -22,11 +23,21 @@ async function findByEmail({ email }) {
     return searchEmail;
 }
 
+async function deleteSession({ userId }) {
+    const db = await connection({ column: 'sessions' });
+
+    await db.deleteMany({ userId: new ObjectId(userId) });
+
+    return true;
+}
+
 async function login({
     token,
     userId,
 }) {
     const db = await connection({ column: 'sessions' });
+
+    await deleteSession({ userId });
 
     await db.insertOne({
         token,
@@ -34,8 +45,18 @@ async function login({
     });
 }
 
+async function findById({ userId }) {
+    const db = await connection({ column: 'users' });
+
+    const user = await db.findOne({ _id: new ObjectId(userId) });
+
+    return user;
+}
+
 export {
     create,
     findByEmail,
+    deleteSession,
     login,
+    findById,
 };
