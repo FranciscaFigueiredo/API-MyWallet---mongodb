@@ -64,8 +64,42 @@ async function findFinancialEventsByUserId({ userId }) {
     };
 }
 
+async function removeFinancialEvent({ userId, id }) {
+    await financeRepository.deleteFinancialEvent({ userId, id });
+
+    return true;
+}
+
+async function searchFinancialEvent({ id, userId }) {
+    const financialEvent = await financeRepository.findOneFinancialEvent({ id, userId });
+
+    return financialEvent;
+}
+
+async function editFinancialEvent({
+    id,
+    userId,
+    value,
+    description,
+}) {
+    const dateToday = dayjs().locale('pt-Br').format('DD/MM/YYYY HH:mm:ss');
+
+    await financeRepository.updateFinancialEvent({
+        id,
+        userId,
+        value,
+        description,
+        date: dateToday,
+    });
+
+    return true;
+}
+
 export {
     validateType,
     newFinancialEvent,
     findFinancialEventsByUserId,
+    removeFinancialEvent,
+    searchFinancialEvent,
+    editFinancialEvent,
 };
