@@ -123,9 +123,27 @@ async function updateFinancialEvent(req, res) {
     }
 }
 
+async function getFinancialEventData(req, res) {
+    const userId = res.locals.user;
+    const id = req.params;
+
+    try {
+        const financialEvent = await financeService.searchFinancialEvent({ id, userId });
+
+        return res.send(financialEvent);
+    } catch (error) {
+        if (error instanceof NotFoundError) {
+            return res.status(404).send(error.message);
+        }
+
+        return res.status(500).send({ message: 'O banco de dados está offline' });
+    }
+}
+
 export {
     postFinancialEvents,
     getFinancialEvents,
     deleteFinancialEvent,
     updateFinancialEvent,
+    getFinancialEventData,
 };

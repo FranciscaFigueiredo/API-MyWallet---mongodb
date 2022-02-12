@@ -70,6 +70,12 @@ async function removeFinancialEvent({ userId, id }) {
     return true;
 }
 
+async function searchFinancialEvent({ id, userId }) {
+    const financialEvent = await financeRepository.findOneFinancialEvent({ id, userId });
+
+    return financialEvent;
+}
+
 async function editFinancialEvent({
     id,
     userId,
@@ -94,5 +100,6 @@ export {
     newFinancialEvent,
     findFinancialEventsByUserId,
     removeFinancialEvent,
+    searchFinancialEvent,
     editFinancialEvent,
 };

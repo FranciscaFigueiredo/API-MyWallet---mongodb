@@ -46,6 +46,21 @@ async function deleteFinancialEvent({ userId, id }) {
     return true;
 }
 
+async function findOneFinancialEvent({ id, userId }) {
+    const db = await connection({ column: 'financialEvents' });
+
+    const financialEvent = await db.findOne({
+        userId: new ObjectId(userId),
+        _id: new ObjectId(id),
+    });
+
+    if (!financialEvent) {
+        throw new NotFoundError();
+    }
+
+    return financialEvent;
+}
+
 async function updateFinancialEvent({
     id,
     userId,
@@ -76,5 +91,6 @@ export {
     create,
     find,
     deleteFinancialEvent,
+    findOneFinancialEvent,
     updateFinancialEvent,
 };

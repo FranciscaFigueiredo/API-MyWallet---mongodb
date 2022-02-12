@@ -9,6 +9,7 @@ router.use(auth);
 router.post('/new-transition', financialEventsValidation, auth, financeController.postFinancialEvents);
 router.get('/', auth, financeController.getFinancialEvents);
 router.delete('/event/:id', auth, financeController.deleteFinancialEvent);
+router.get('/event/:id', auth, financeController.getFinancialEventData);
 router.put('/event/:id', auth, financeController.updateFinancialEvent);
 
 export default router;
