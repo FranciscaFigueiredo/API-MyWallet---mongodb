@@ -8,6 +8,8 @@
 
 You can add debits and credits to your account.
 
+Deploy: https://mywallet-seven.vercel.app/
+
 <br>
 
 ## How to install and run on terminal
